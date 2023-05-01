@@ -60,12 +60,12 @@ io.on("connection", (socket) => {
     const winner = gameLoop(state[roomName]);
 
     if (winner) {
-      emitGameOver(roomName, winner);
+      emitGameOver(roomName, winner, num);
       delete state[roomName];
       return;
     }
 
-    emitGameState(roomName, state[roomName]);
+    emitGameState(roomName, state[roomName], num);
     // socket.emit("success");
   });
 
@@ -94,8 +94,10 @@ io.on("connection", (socket) => {
     socket.join(gameCode);
     socket.number = 2;
     socket.emit("init", 2);
-    io.sockets.in(gameCode).emit("gameStarted");
-    emitGameState(gameCode, state[gameCode]);
+    io.sockets
+      .in(gameCode)
+      .emit("gameStarted", JSON.stringify(state[gameCode]));
+    // emitGameState(gameCode, state[gameCode]);
   }
 
   function handleNewGame() {
@@ -110,11 +112,12 @@ io.on("connection", (socket) => {
   }
 });
 
-function emitGameState(roomName, state) {
-  io.sockets.in(roomName).emit("gameState", JSON.stringify(state));
+function emitGameState(roomName, state, num) {
+  io.sockets.in(roomName).emit("gameState", JSON.stringify(state), num);
 }
 
-function emitGameOver(roomName, winner) {
+function emitGameOver(roomName, winner, num) {
+  emitGameState(roomName, state[roomName], num);
   io.sockets.in(roomName).emit("gameOver", JSON.stringify({ winner }));
 }
 
