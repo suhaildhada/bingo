@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  image-rendering: pixelated;
+}
+
+#canvas {
+  background-color: white;
+}
+
+#errorMsg {
+  color: red;
+  display: none;
+}
+
+#gameCodeText {
+  cursor: pointer;
+}
+
+#gameScreen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bingo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+}
