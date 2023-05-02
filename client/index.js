@@ -2,8 +2,8 @@ let grid,
   gameOn = false,
   playerNumber;
 
-// const socket = io();
-const socket = io("http://localhost:3000");
+const socket = io();
+// const socket = io("http://localhost:3000");
 
 const allCells = document.querySelectorAll(".cell");
 
@@ -41,7 +41,9 @@ gameCodeText.addEventListener("click", () => {
 
 socket.on("gameState", handleGameState);
 socket.on("success", () => successAudio.play());
-socket.on("gameStarted", handleGameStarted);
+socket.on("gameStarted", (gameState) => {
+  handleGameStarted(gameState);
+});
 socket.on("gameOver", handleGameOver);
 socket.on("alreadyMarked", () => {
   setError("Already Marked! Choose a different number.");
@@ -73,6 +75,7 @@ function handleGameStarted(gameState) {
   gameStartAudio.play();
   gameOn = true;
   gameState = JSON.parse(gameState);
+  console.log(gameState);
   let state;
   if (playerNumber == 1) {
     state = gameState.player[0];

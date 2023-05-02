@@ -97,6 +97,7 @@ io.on("connection", (socket) => {
     io.sockets
       .in(gameCode)
       .emit("gameStarted", JSON.stringify(state[gameCode]));
+
     // emitGameState(gameCode, state[gameCode]);
   }
 
