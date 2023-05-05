@@ -2,8 +2,8 @@ let grid,
   gameOn = false,
   playerNumber;
 
-const socket = io();
-// const socket = io("http://localhost:3000");
+// const socket = io();
+const socket = io("http://localhost:3000");
 
 const allCells = document.querySelectorAll(".cell");
 
@@ -17,8 +17,8 @@ const gameCodeText = document.getElementById("gameCodeText");
 const gameInfoDisplay = document.getElementById("gameInfo");
 const bingoSpans = document.querySelectorAll(".bingo");
 
-const errorMsgDiv = document.getElementById("errorMsg");
-const errorDisplay = document.getElementById("error");
+const alertMessage = document.getElementById("alert-message");
+const alertContainer = document.getElementById("alert-container");
 
 const gameWinAudio = new Audio("./audio/game_win.mp3");
 const gameLoseAudio = new Audio("./audio/game_lose.mp3");
@@ -31,12 +31,17 @@ newGameBtn.addEventListener("click", newGame);
 joinGameBtn.addEventListener("click", joinGame);
 allCells.forEach((cell) => {
   cell.addEventListener("click", () => {
+    if (!gameOn) {
+      setAlert("Game has not started yet!");
+      return;
+    }
     let num = cell.innerText;
     socket.emit("numberChosen", num);
   });
 });
 gameCodeText.addEventListener("click", () => {
   navigator.clipboard.writeText(gameCodeText.innerText);
+  setAlert("Successfully copied to clip board!", "success");
 });
 
 socket.on("gameState", handleGameState);
@@ -46,7 +51,7 @@ socket.on("gameStarted", (gameState) => {
 });
 socket.on("gameOver", handleGameOver);
 socket.on("alreadyMarked", () => {
-  setError("Already Marked! Choose a different number.");
+  setAlert("Already Marked! Choose a different number.");
   wrongAudio.play();
 });
 socket.on("gameCode", (gameCode) => {
@@ -64,11 +69,25 @@ socket.on("notYourTurn", () => {
 });
 socket.on("init", (number) => (playerNumber = number));
 
+function setAlert(msg, type = "danger", ms = 5000) {
+  alertContainer.style.display = "block";
+  alertContainer.classList.add("alert-display");
+  alertMessage.classList.add(`alert-${type}`);
+  alertMessage.innerText = msg;
+
+  setTimeout(() => {
+    alertMessage.innerText = "";
+    alertContainer.style.display = "none";
+    alertContainer.classList.remove("alert-display");
+    alertMessage.classList.remove(`alert-${type}`);
+  }, ms);
+}
+
 function handleErrors(msg, reload = false) {
   if (reload) {
     reset();
   }
-  setError(msg);
+  setAlert(msg);
 }
 
 function handleGameStarted(gameState) {
@@ -150,17 +169,6 @@ function joinGame() {
   showGameScreen();
 }
 
-function setError(msg) {
-  errorDisplay.style.display = "block";
-  errorDisplay.classList.add("error-display");
-  errorMsgDiv.innerText = msg;
-
-  setTimeout(() => {
-    errorMsgDiv.innerText = "";
-    errorDisplay.style.display = "none";
-    errorDisplay.classList.remove("error-display");
-  }, 5000);
-}
 function displayGameInfo(gameState) {
   if (!gameOn) {
     return;

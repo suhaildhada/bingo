@@ -29,21 +29,31 @@
   </head>
   <body>
     <div id="initialScreen">
-      <h1>Bingo Multiplayer</h1>
-      <button type="submit" class="btn btn-success" id="newGameButton">
+      <img src="images/bingo.png" alt="Bingo!" class="d-block mb-2 bingo-img" />
+      <!-- <h1>Bingo Multiplayer</h1> -->
+      <button type="submit" class="w-100 btn btn-success" id="newGameButton">
         Create new game
       </button>
-      <div>OR</div>
-      <div class="form-gorup">
-        <input type="text" placeholder="Enter game code" id="gameCodeInput" />
+      <span class="mt-2 text-center d-block text-or">OR</span>
+      <div class="form-gorup mt-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter game code"
+          id="gameCodeInput"
+        />
       </div>
-      <button type="submit" class="btn btn-success mt-3" id="joinGameButton">
-        Join Game
+      <button
+        type="submit"
+        class="btn btn-success mt-3 w-100"
+        id="joinGameButton"
+      >
+        Join game
       </button>
     </div>
 
-    <div id="gameScreen">
-      <h1>Bingo!</h1>
+    <div id="gameScreen" class="text-center">
+      <img src="images/bingo.png" alt="Bingo!" class="d-block mb-2 bingo-img" />
       <h2>Game Code: <span id="gameCodeText"></span></h2>
       <h2 id="gameInfo">Waiting for all players to join...</h2>
 
@@ -83,8 +93,8 @@
         <div class="cell"></div>
       </div>
     </div>
-    <div id="error" class="mt-2">
-      <div id="errorMsg" class="alert alert-danger p-1"></div>
+    <div id="alert-container" class="mt-2">
+      <div id="alert-message" class="alert p-1"></div>
     </div>
   </body>
 </html>

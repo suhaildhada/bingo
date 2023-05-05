@@ -9,7 +9,9 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: monospace;
+
   position: relative;
 }
 
@@ -17,7 +19,7 @@ body {
   background-color: white;
 }
 
-#error {
+#alert-container {
   position: absolute;
   top: 0;
   right: 50;
@@ -25,13 +27,14 @@ body {
   transition: all 200ms ease-in;
 }
 
-.error-display {
+.alert-display {
   right: 50;
   display: block;
 }
 
-#errorMsg {
-  color: red;
+.text-or {
+  font-size: 2rem;
+  font-family: cursive;
 }
 
 #gameCodeText {
@@ -93,6 +96,10 @@ body {
   #grid {
     grid-template-columns: repeat(5, minmax(70px, 1fr));
     grid-template-rows: repeat(5, minmax(70px, 1fr));
+  }
+
+  .bingo-img {
+    width: 300px;
   }
 }
 
