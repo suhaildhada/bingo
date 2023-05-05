@@ -2,6 +2,24 @@ let grid,
   gameOn = false,
   playerNumber;
 
+const bingoImgColorPaths = [
+  "./images/bingo-letters/color/b.png",
+  "./images/bingo-letters/color/i.png",
+  "./images/bingo-letters/color/n.png",
+  "./images/bingo-letters/color/g.png",
+  "./images/bingo-letters/color/o.png",
+  "./images/bingo-letters/color/!.png",
+];
+
+const bingoImgDefaultPaths = [
+  "./images/bingo-letters/default/b.png",
+  "./images/bingo-letters/default/i.png",
+  "./images/bingo-letters/default/n.png",
+  "./images/bingo-letters/default/g.png",
+  "./images/bingo-letters/default/o.png",
+  "./images/bingo-letters/default/!.png",
+];
+
 // const socket = io();
 const socket = io("http://localhost:3000");
 
@@ -15,7 +33,7 @@ const joinGameBtn = document.getElementById("joinGameButton");
 const joinGameInput = document.getElementById("gameCodeInput");
 const gameCodeText = document.getElementById("gameCodeText");
 const gameInfoDisplay = document.getElementById("gameInfo");
-const bingoSpans = document.querySelectorAll(".bingo");
+const bingoImgs = document.querySelectorAll(".bingo-letter");
 
 const alertMessage = document.getElementById("alert-message");
 const alertContainer = document.getElementById("alert-container");
@@ -187,12 +205,19 @@ function displayGameInfo(gameState) {
     gameInfoDisplay.innerText = "Opponents turn";
   }
 
-  for (let i = 0; i < bingoSpans.length; i++) {
-    let span = bingoSpans[i];
+  for (let i = 0; i < bingoImgs.length; i++) {
+    let image = bingoImgs[i];
+
     if (i + 1 <= state.completed) {
-      span.classList.add("fire");
+      image.src = bingoImgColorPaths[i];
     } else {
-      span.classList.remove("fire");
+      image.src = bingoImgDefaultPaths[i];
+    }
+
+    if (i === bingoImgs.length - 1) {
+      if (state.completed === 5) {
+        image.src = bingoImgColorPaths[i];
+      }
     }
   }
 }
