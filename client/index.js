@@ -27,6 +27,7 @@ const allCells = document.querySelectorAll(".cell");
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
+const bgImgHolder = document.querySelector(".bg-image-container");
 
 const newGameBtn = document.getElementById("newGameButton");
 const joinGameBtn = document.getElementById("joinGameButton");
@@ -165,10 +166,13 @@ function handleGameState(gameState, num) {
 function showGameScreen() {
   initialScreen.style.display = "none";
   gameScreen.style.display = "flex";
+  bgImgHolder.style.display = "none";
 }
 
 function reset() {
   playerNumber = null;
+  bgImgHolder.style.display = "block";
+
   joinGameInput.value = "";
   gameCodeText.innerText = "";
   initialScreen.style.display = "block";
