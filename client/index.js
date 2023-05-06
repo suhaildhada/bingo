@@ -88,7 +88,7 @@ socket.on("notYourTurn", () => {
 });
 socket.on("init", (number) => (playerNumber = number));
 
-function setAlert(msg, type = "danger", ms = 5000) {
+function setAlert(msg, type = "danger", ms = 1000) {
   alertContainer.style.display = "block";
   alertContainer.classList.add("alert-display");
   alertMessage.classList.add(`alert-${type}`);
